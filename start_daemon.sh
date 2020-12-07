@@ -6,7 +6,7 @@ SCRIPT_DIR=`cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P`
 cd ${BIN_PATH} && \
  ./spacemesh --grpc-server --json-server --tcp-port 7153 --config ./tn01.json \
  -d ./sm_data \
- --coinbase ${COINBASE_ADDR} \
+ --coinbase $(cat ${BIN_PATH}addr.txt) \
  --start-mining \
  --post-datadir ./post_data \
  --metrics
