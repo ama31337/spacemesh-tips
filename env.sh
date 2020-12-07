@@ -1,7 +1,7 @@
 #!/bin/bash 
 
 SCRIPT_DIR=`cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P`
-#export USER="$USER"
+#export CUR_USER="$USER"
 export HOME_PATH="/home/$USER/"
 export BIN_PATH="/home/$USER/bin/"
 #export DATA_DIR="/home/$USER/data/"
