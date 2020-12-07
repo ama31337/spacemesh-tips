@@ -12,3 +12,4 @@ export UNIT_FILE_URL="https://raw.githubusercontent.com/ama31337/spacemesh-tips/
 export START_FILE="https://raw.githubusercontent.com/ama31337/spacemesh-tips/main/start_daemon.sh"
 export ENV_FILE="https://raw.githubusercontent.com/ama31337/spacemesh-tips/main/env.sh"
 export SERVICE_NAME="spacemeshd.service"
+export ADDR=`cat ${BIN_PATH}addr.txt`

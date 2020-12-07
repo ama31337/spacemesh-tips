@@ -11,6 +11,7 @@ cd ${BIN_PATH}
 wget ${RELEASE_URL} -O spacemesh && chmod u+x spacemesh
 wget ${CLI_URL} -O cli && chmod u+x cli
 wget ${CONFIG_URL} -O tn01.json
+wget ${ENV_FILE} -O env.sh chmod u+x env.sh
 
 # setup service file
 wget ${UNIT_FILE_URL} -O ${SERVICE_NAME}
@@ -30,8 +31,9 @@ sudo systemctl enable $SERVICE_NAME
 sudo systemctl start $SERVICE_NAME
 
 #create alias
-echo 'alias spacestart="sudo systemctl start $SERVICE_NAME"' >> ~/.bash_aliases
-echo 'alias spacestop="sudo systemctl stop $SERVICE_NAME"' >> ~/.bash_aliases
+echo "alias spacestart='sudo systemctl start $SERVICE_NAME'" >> ~/.bash_aliases
+echo "alias spacestop='sudo systemctl stop $SERVICE_NAME'" >> ~/.bash_aliases
+echo "alias spacestatus='sudo systemctl status $SERVICE_NAME'" >> ~/.bash_aliases
 source ~/.bash_aliases
 
 
