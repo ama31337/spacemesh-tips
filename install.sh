@@ -1,25 +1,36 @@
 #!/bin/bash
-USR="root"
-HOME_PATH="/root"
-RELEASE_URL="https://storage.googleapis.com/smapp/go-sm-0.1.17/go-spacemesh-linux"
-CLI_URL="https://github.com/spacemeshos/CLIWallet/releases/download/v0.0.1/cli_wallet_linux_amd64"
-CONFIG_URL="https://storage.googleapis.com/smapp/0.1.5/config_122.json"
-UNIT_FILE_URL="https://raw.githubusercontent.com/c29r3/spacemesh-utils/main/spacemesh_node.service"
-START_FILE="https://raw.githubusercontent.com/c29r3/spacemesh-utils/main/start_daemon.sh"
-SERVICE_NAME="spacemesh_node.service"
 
-systemctl stop $SERVICE_NAME
-mkdir $HOME_PATH/spacemesh
-cd $HOME_PATH/spacemesh
+SCRIPT_DIR=`cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P`
+. "${SCRIPT_DIR}/env.sh"
 
-wget $RELEASE_URL -O spacemesh && chmod u+x spacemesh
-wget $CLI_URL -O cli && chmod u+x cli
-wget $CONFIG_URL -O tn01.json
-wget $UNIT_FILE_URL -O /etc/systemd/system/$SERVICE_NAME
-systemctl daemon-reload
+sudo systemctl stop $SERVICE_NAME
+mkdir -p ${BIN_PATH}
+cd ${BIN_PATH}
+
+# get bins and config
+wget ${RELEASE_URL} -O spacemesh && chmod u+x spacemesh
+wget ${CLI_URL} -O cli && chmod u+x cli
+wget ${CONFIG_URL} -O tn01.json
+
+# setup service file
+wget ${UNIT_FILE_URL} -O ${SERVICE_NAME}
+sed -i 's/<user>/$USER/g'
+sed -i 's/<work_dir>/${BIN_PATH}/g'
+sudo cp ${SERVICE_NAME} /etc/systemd/system/$SERVICE_NAME
+sudo systemctl daemon-reload
+
+# get start sctipt
 wget $START_FILE -O start_daemon.sh && chmod u+x start_daemon.sh
 
+# clear prev data
 rm -rf sm_data post_data
-systemctl enable $SERVICE_NAME
-systemctl start $SERVICE_NAME
+
+# start service
+sudo systemctl enable $SERVICE_NAME
+sudo systemctl start $SERVICE_NAME
+
+#create alias
+echo 'alias spacestart="sudo systemctl start $SERVICE_NAME"' >> ~/.bash_aliases
+echo 'alias spacestop="sudo systemctl stop $SERVICE_NAME"' >> ~/.bash_aliases
+source ~/.bash_aliases
 
