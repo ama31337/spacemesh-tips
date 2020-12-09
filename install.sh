@@ -11,7 +11,7 @@ cd ${BIN_PATH}
 wget ${RELEASE_URL} -O spacemesh && chmod u+x spacemesh
 wget ${CLI_URL} -O cli && chmod u+x cli
 wget ${CONFIG_URL} -O tn01.json
-wget ${ENV_FILE} -O env.sh chmod u+x env.sh
+wget ${ENV_FILE} -O env.sh && chmod u+x env.sh
 
 # setup service file
 wget ${UNIT_FILE_URL} -O ${SERVICE_NAME}
